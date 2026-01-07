@@ -1,10 +1,4 @@
-Here is the reorganized summary, categorized by paper. I have optimized the mathematical formulas for **GitHub Flavored Markdown** to ensure they render correctly.
-
----
-
-# Fundamental Algorithms and Mathematical Concepts in Automated Factor Mining
-
-## 1. Paper: OpenFE
+## 1. OpenFE
 **Full Title:** *Automated Feature Generation with Expert-level Performance*
 
 ### 1.1 Gradient Boosting Decision Trees (GBDT) & LightGBM
@@ -26,28 +20,24 @@ Here is the reorganized summary, categorized by paper. I have optimized the math
 **Context:** Used in the "Theoretical Advantage" section (Section 4 & Appendix A) to prove why feature generation works.
 *   **Description:** A measure of the richness (complexity) of a class of functions. It quantifies a model's ability to fit random noise. The paper introduces **Group Rademacher Complexity** to handle tabular data where rows (e.g., transactions) are grouped by entities (e.g., users).
 *   **Mathematical Formulation:**
-    The complexity is bounded as:
 
 $$
 Rad_k(\mathcal{F}) = \mathbb{E} \left[ \sup_{f \in \mathcal{F}} \frac{1}{k} \sum_{i=1}^{k} \sigma_i L(H, f, X_i, Y_i) \right]
 $$
 
-    Where:
-    *   $\sigma_i$: Independent Rademacher variables (+1 or -1 with probability 0.5).
-    *   $L$: Loss function.
-    *   $H$: Feature generation function.
+| Symbol | Definition |
+| :--- | :--- |
+| $\sigma_i$ | Independent Rademacher variables (+1 or -1 with probability 0.5) |
+| $L$ | Loss function |
+| $H$ | Feature generation function |
 
----
-
-## 2. Paper: OpenFE++
+## 2. OpenFE++
 **Full Title:** *Efficient Automated Feature Generation via Feature Interaction*
 
 ### 2.1 Feature Interaction via Tree Path Co-occurrence
 **Context:** Used to prune the search space by identifying features that likely interact before generating formulas.
 *   **Description:** Instead of brute-force enumerating all combinations ($O(N^2)$), OpenFE++ uses a pre-trained LightGBM model to detect interactions.
 *   **Mechanism:** If two features $x_i$ and $x_j$ frequently appear on the **same path** (from root to leaf) in the decision trees, they are considered to have a strong interaction strength. This is based on the logic that the model found a non-linear dependency between them.
-*   **Formula:**
-    The interaction strength $S_{i,j}$ is calculated by summing the gains or frequency of co-occurrences across all trees.
 
 ### 2.2 Wiener-Khinchin Theorem & Fast Fourier Transform (FFT)
 **Context:** Used for "Temporal Feature Generation" to efficiently identify lagged effects in time-series data.
@@ -56,21 +46,20 @@ $$
     *   **Wiener-Khinchin Theorem:** States that the autocorrelation of a stationary process is the inverse Fourier transform of its power spectral density.
 *   **Application:** It allows the algorithm to calculate the correlation between two variables at *all* possible time lags simultaneously in $O(L \log L)$ time, rather than $O(L^2)$ via brute force.
 *   **Mathematical Formulation:**
-    The lagged correlation $Q$ for all lags $T$ is computed via:
 
 $$
 \{Q^{(i,j)}_t(T)\}_{T=0}^{L-1} = \frac{1}{L} \mathcal{F}^{-1} \left( \mathcal{F}\left(x^{(j)}\right) \odot \overline{\mathcal{F}\left(x^{(i)}\right)} \right)
 $$
 
-    Where:
-    *   $\mathcal{F}$: Fast Fourier Transform.
-    *   $\mathcal{F}^{-1}$: Inverse Fast Fourier Transform.
-    *   $\odot$: Element-wise product.
-    *   The bar over $\mathcal{F}$ denotes the complex conjugate.
+| Symbol | Definition |
+| :--- | :--- |
+| $\mathcal{F}$ | Fast Fourier Transform |
+| $\mathcal{F}^{-1}$ | Inverse Fast Fourier Transform |
+| $\odot$ | Element-wise product |
+| $\overline{\mathcal{F}}$ | Complex conjugate of the Fourier Transform |
 
----
 
-## 3. Paper: AlphaEvolve
+## 3. AlphaEvolve
 **Full Title:** *A Learning Framework to Discover Novel Alphas in Quantitative Investment*
 
 ### 3.1 Evolutionary Algorithms (Genetic Programming)
@@ -91,25 +80,9 @@ $$
 IC = \frac{1}{N} \sum_{t=1}^{N} corr(\hat{y}_t, y_t)
 $$
 
-    Where:
-    *   $\hat{y}_t$: Vector of predicted values (alpha scores) at time $t$.
-    *   $y_t$: Vector of actual returns at time $t$.
-    *   $N$: Number of time periods.
+| Symbol | Definition |
+| :--- | :--- |
+| $\hat{y}_t$ | Vector of predicted values (alpha scores) at time $t$ |
+| $y_t$ | Vector of actual returns at time $t$ |
+| $N$ | Number of time periods |
 
-### 3.3 Sharpe Ratio
-**Context:** Used to evaluate the risk-adjusted return of a portfolio constructed using the alpha.
-*   **Description:** It measures the excess return per unit of deviation (risk). A higher Sharpe ratio indicates better risk-adjusted performance.
-*   **Mathematical Formulation:**
-
-$$
-SR = \frac{R_p - R_f}{\sigma_p}
-$$
-
-    Where:
-    *   $R_p$: Expected portfolio return.
-    *   $R_f$: Risk-free rate of return.
-    *   $\sigma_p$: Standard deviation of the portfolio return (volatility).
-
-### 3.4 AutoML-Zero
-**Context:** The inspiration for the "AlphaEvolve" architecture.
-*   **Description:** A concept where the machine learning algorithm itself (not just the parameters) is learned from scratch using basic mathematical operations, without human-designed layers. AlphaEvolve adapts this to evolve trading formulas using scalar, vector, and matrix operations.
