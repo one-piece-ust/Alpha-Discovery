@@ -38,8 +38,12 @@ R&D-Agent 的核心方法论在于模拟真实研发团队的工作流，通过�
 AlphaAgent 的核心方法论侧重于数学层面的优化目标设计。它将 Alpha 挖掘建模为一个**带约束的优化问题**，旨在对抗因子的“过拟合”和“同质化”（即 Alpha 衰减）。
 
 ### A. 正则化优化目标 ($\mathcal{R}_g$)
+
 该模型的目标不仅是最大化预测性能 $\mathcal{L}$，还要最小化正则化项 $\mathcal{R}_g$。优化公式为：
+
 $$f^{*} = \arg \max_{f \in \mathcal{F}} \mathcal{L}(f(X), y) - \lambda \mathcal{R}_g(f, h)$$
+
+
 
 正则化项 $\mathcal{R}_g$ 包含三个具体的约束机制：
 1.  **原创性强制 (Originality Enforcement)**:
