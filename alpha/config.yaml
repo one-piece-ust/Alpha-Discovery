@@ -1,0 +1,102 @@
+# Qlib 因子回测框架配置文件
+
+# 数据配置
+data:
+  provider: qlib  # 数据提供者: qlib, tushare, akshare
+  market: csi300  # 市场: csi300, csi500, all
+  data_path: ./data/qlib_data  # 数据存储路径
+  
+# 回测配置
+backtest:
+  start_date: "2018-01-01"
+  end_date: "2023-12-31"
+  universe: csi300  # 股票池: csi300, csi500, all
+  benchmark: SH000300  # 基准: SH000300 (沪深300), SH000905 (中证500)
+  freq: day  # 频率: day, 30min, 5min
+  
+# 因子配置
+factor:
+  # 因子预处理
+  neutralize: true  # 是否市值中性化
+  neutralize_factors:  # 中性化因子
+    - "$market_cap"
+  standardize: true  # 是否标准化
+  winsorize: true   # 是否去极值
+  winsorize_method: std  # 去极值方法: std, mad, quantile
+  winsorize_std: 3  # 标准差倍数
+  winsorize_quantile: [0.01, 0.99]  # 分位数
+  
+  # 因子过滤
+  min_coverage: 0.8  # 最小覆盖率
+  min_periods: 20    # 最小有效期数
+  
+# 组合配置
+portfolio:
+  # 分层回测
+  n_groups: 10      # 分层数量
+  group_method: quantile  # 分组方法: quantile, equal
+  
+  # 多空组合
+  top_pct: 0.2      # 多头比例 (前20%)
+  bottom_pct: 0.2   # 空头比例 (后20%)
+  long_short: true  # 是否构建多空组合
+  
+  # 调仓设置
+  rebalance_freq: 1d  # 调仓频率: 1d, 5d, 20d
+  hold_thresh: 0.1    # 持仓阈值
+  
+  # 交易成本
+  trade_cost: 0.001   # 交易成本 (双边)
+  min_cost: 5.0       # 最小交易成本
+
+# 评价指标配置
+metrics:
+  # IC 分析
+  ic_lag: 1  # IC 滞后期
+  ic_method: pearson  # 相关系数方法: pearson, spearman
+  
+  # 收益分析
+  return_lag: 1  # 收益滞后期
+  holding_period: 1  # 持有期
+  
+  # 风险指标
+  risk_free_rate: 0.03  # 无风险利率
+  annual_days: 252  # 年化天数
+
+# 报告配置
+report:
+  output_dir: ./results/reports  # 报告输出目录
+  data_dir: ./results/data  # 数据输出目录
+  format: html  # 报告格式: html, pdf
+  
+  # 图表配置
+  figsize: [12, 6]  # 图表大小
+  dpi: 100  # 图表分辨率
+  style: seaborn  # 图表风格
+  
+  # 是否生成各类图表
+  plot_ic: true
+  plot_returns: true
+  plot_turnover: true
+  plot_distribution: true
+  plot_correlation: true
+
+# 日志配置
+logging:
+  level: INFO  # 日志级别: DEBUG, INFO, WARNING, ERROR
+  format: "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>"
+  file: ./logs/backtest.log  # 日志文件路径
+  rotation: "10 MB"  # 日志轮转大小
+  retention: "30 days"  # 日志保留时间
+
+# 缓存配置
+cache:
+  enabled: true  # 是否启用缓存
+  cache_dir: ./cache  # 缓存目录
+  ttl: 86400  # 缓存过期时间 (秒)
+
+# 并行配置
+parallel:
+  enabled: true  # 是否启用并行计算
+  n_jobs: -1  # 并行任务数 (-1 表示使用所有CPU核心)
+  backend: multiprocessing  # 并行后端: multiprocessing, threading

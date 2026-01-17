@@ -1,0 +1,57 @@
+# 忽略数据文件
+data/qlib_data/
+data/*.csv
+data/*.pkl
+
+# 忽略结果文件
+results/
+logs/
+cache/
+
+# 忽略 Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 忽略 Jupyter Notebook 检查点
+.ipynb_checkpoints
+
+# 忽略环境
+venv/
+env/
+ENV/
+.venv
+
+# 忽略 IDE 配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 忽略系统文件
+.DS_Store
+Thumbs.db
+
+# 忽略临时文件
+*.tmp
+*.temp
+*.log
+qlib_bin.tar.gz

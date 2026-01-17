@@ -1,0 +1,27 @@
+.
+├── backtest
+│   ├── analysis.py
+│   ├── factor_test.py
+│   ├── __init__.py
+│   └── portfolio.py
+├── config.yaml
+├── factors
+│   ├── custom.py
+│   ├── fundamental.py
+│   ├── __init__.py
+│   └── technical.py
+├── install.sh
+├── project_structure.txt
+├── quickstart.py
+├── README.md
+├── requirements.txt
+├── scripts
+│   ├── download_data.py
+│   └── run_backtest.py
+├── USAGE_GUIDE.md
+└── utils
+    ├── data_loader.py
+    ├── __init__.py
+    └── metrics.py
+
+4 directories, 20 files
